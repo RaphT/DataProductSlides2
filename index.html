@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Beta Distribution Explorer</title>
+  <meta name="description" content="">
+  <meta name="author" content="RaphT">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/css/reveal.min.css">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/css/theme/beige.css" id="theme">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/default.css" id="theme">
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->  <link rel="stylesheet" href = "assets/css/ribbons.css">
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class='' data-state='' id='slide-1'>
+  <h3>Beta Distribution Explorer</h3>
+  <p>By RaphT, Feb 2015
+<br><br>
+<br><br>
+<br><br>
+Try out the explorer <a href="http://rapht.shinyapps.io/DataProductProject/">here</a></p>
+
+</section>
+<section class='' data-state='' id='slide-2'>
+  <h3>The Beta Distribution Family</h3>
+  
+<div style='float:left;width:48%;' align="left">
+  <p>The Beta distribution is a family of distributions:</p>
+
+<ul>
+<li>Continuously defined in the [0,1] interval</li>
+<li>Controlled by two positive shape parameters alpha and beta</li>
+<li>Used to model random variables limited to a finite length interval</li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;' align="center">
+  <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoCAMAAABNO5HnAAAAyVBMVEX9/v0AAAAAADoAAGYAOpAAZrYA/wA6AAA6AGY6OpA6kNtNTU1mAABmADpmAGZmtv9/f39/f5V/f6t/lcF/q9aDg4OQOgCQ2/+Vf3+VlcGVq9aVweurf6urlZWrlcGrq6ur1v+2ZgC2/7a2///BlX/BlZXBlavBq8HBwdbB6//Wq3/Wq5XW///bkDrb/7bb///l5eXrwZXr1qvr///t7e3y8vL29vb5+fn/AAD/TU3/tmb/1qv/25D/68H//7b//9b//9v//+v///+qrXZpAAAAQ3RSTlP/////////////////////////////////////////////////////////////////////////////////////////bGDrYgAAAAlwSFlzAAALEgAACxIB0t1+/AAADDtJREFUeJzt3Q1327YZBeCqS9WtTjNt+dqWbvPa7CNuvEQz7SpR6sT4/z9qIEGCAAmQAARekdJ9D08ObVr3QI/fQCRFi18JFqS+OvYAzqUIDSpCg4rQoCI0qAgNKkKDitCgIjSoCA0qQoOK0KAiNKjCoN9b1fnSVbfjP5IpJiDlODGEBsUQGhRDaFAMoUExhAbFEBoUQ2hQDKFBMYQGxRAaFENoUAyhQTGEBsUkQd9a1fkytfLEzGowZgw7GhRDaFAMoUExhAbFEBoUQ2hQDKFBMYQGxRAaFENoUAyhQTGEBsUQGhRDaFAMoUExhAbFEBoUQ2hQDKFBMYQGxRAaFENoUAyhQTGEBsUQGhRDaFBMBuiVrMPHROhxaCEIPRpDaFAMoUExhAbFEBoUQ2hQDKFBMYQGxRAaFENoUEww9HazeUbo9JhQ6L1UvrokdHJMKPT273VHb2TZm1bVwooqL/SVVN6yo9NjQqFL5P0rQifHhELv2dGHxYRCl3sdTUMTOiEmGNosO43QITGEBsUQGhRDaFAMoUExhAbFEBoUQ2hQDKFBMYQGxRAaFENoUAyhQTGEBsUQGhRDaFAMoUExhAbFEBoUQ2hQDKFBMYQGxRAaFENoUAyhQTGEBsUQGhRDaFAMoUExhAbFEBoUQ2hQDKFBMYQGxSRB2/eSK6Hz3pLu6CnzvM0eOzokhtCgGEKDYggNiiE0KIbQoBhCg2IIDYohNCiG0KAY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" alt="plot of chunk unnamed-chunk-1"> </p>
+
+<p><span style="font-size:0.5em;">Examples of beta distribution</span></p>
+
+</div>
+<div style='float:left;width:100%;' align="left">
+  
+</div>
+</section>
+<section class='' data-state='' id='slide-3'>
+  <h3>Explorer work flow</h3>
+  <ol>
+<li>Simulates a beta distribution based on a set of parameters </li>
+<li>Uses <strong><a href="http://cran.r-project.org/web/packages/betareg/vignettes/betareg.pdf">Betareg</a></strong> to fit alpha and beta on the simulated distribution </li>
+<li>Displays the distribution and the theoretical and fitted density functions </li>
+</ol>
+
+<pre><code class="r">alpha = 2; beta = 3; dist = data.frame(x = rbeta(100, alpha, beta))
+</code></pre>
+
+<pre><code class="r">model = betareg(x~., link = &quot;logit&quot;, link.phi = &quot;log&quot;, data = dist)
+</code></pre>
+
+<pre><code class="r">ggplot(dist, aes(x=x)) + geom_histogram(aes(y=..density..), breaks=seq(0,1,by=0.011))+
+  stat_function(fun=dbeta, args=list(shape1=alpha, shape2 = beta),col = &quot;red&quot;)+
+  stat_function(fun=dbeta, args=list(shape1=alpha.fitted, shape2 = beta.fitted),col = &quot;green&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAADYCAMAAADxhokmAAAAvVBMVEX9/v0AAAAAADoAAGYAOpAAZrYA/wAzMzM6AAA6ADo6AGY6OpA6kNtmAABmADpmAGZmZmZmtv9/f39/f5V/f6t/lcF/q9aQOgCQOjqQ2/+Vf3+Vq9aVweurf6urlZWrlcGr1v+2ZgC2/7a2///BlX/BlZXBlavBq8HBwdbB6//Wq3/Wq5XW///bkDrb/7bb/9vb///l5eXrwZXr///y8vL/AAD/tmb/1qv/25D/68H//7b//9b//9v//+v///9UvPU8AAAAP3RSTlP///////////////////////////////////////////////////////////////////////////////////+jJJOaAAAACXBIWXMAAAsSAAALEgHS3X78AAAJqElEQVR4nO3dDXfbNBQG4GUUCVi3srCtFAp0H8DarVC3TVu6xf//Z2HJkmM7lvVh6Uqy73s4Z027qMrDneLIlvWkxIDkSewOLCUIDRSEBgpCAwWhgYLQQEFooCA0UBAaKAgNFIQGCkIDBaGBYglddNJ7OJBb7d/Qt+GlEX0bvl8NQodsBKERGqERelpHTKG3H9br1zfsq4v1T+cIbd0RU+j7NxXxGfvi9c19LY7QNm2YQrNcM+jr0/LLb5+rL9ZVxv62h1BKA/+GaBmDZkXNtbd/fRbfCloDRVFBT2/EsSPxKvqCO+8qGqEDvRmeiboGHKOXCH3BhuTTL3/cQB51LBF6OEG7htAI7dCRzKDZdxAaoUfaSBea8vR+jND+uzYOPTx8e+wIQiM0Qo+1gdAhG8kdevBHnjuyNGgGSkQKhPbbtRqRY3LgjQh/gNCeoYkw7oIKbbI06NtOeg+dwtqoEG9ZGYuho/1j/pAXd/f7/jvi7dXIL5Os6KqUW2O0jHjIhg5e2cqinl9FB+garZmLPvTuYT1G87LWvz7njswYmpuWlA/AhRaa1mWte30uHfHXSMrQROK2oWkrO2hmPSiN0Fro+njCHJqNM6Ovz6Uj/hpJDVpqVoNzaQtd8PGDdt4YEXoUmr8H2kMXxUYO65M74uXVDLeRDjRpDpx7KXTQNbWPjnh5NcNtxIcWXkTBvO++B83+2LQ/LCK0GpoSQ2cFdC09qSO9zBTa2FkFTVvDB0KroIm5sxKa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" alt="plot of chunk unnamed-chunk-5"> </p>
+
+</section>
+<section class='' data-state='' id='slide-4'>
+  <h3>Explorer Options</h3>
+  
+<div style='float:left;width:48%;' align="left">
+  
+</div>
+<div style='float:right;width:48%;' align="center">
+  
+</div>
+<div style='float:left;width:100%;' align="left">
+  <p>Interactively change the value of alpha and beta via sliders
+<br><br>
+Interactively change the number of samples in the distribution
+<br><br>
+Choose the standard or alternative parametrization of the distribution</p>
+
+<p>&nbsp;&nbsp;&nbsp;1. The standard directly uses alpha and beta</p>
+
+<p>&nbsp;&nbsp;&nbsp;2. The alternative uses mu (location) and phi (dispersion)</p>
+
+</div>
+</section>
+<section class='' data-state='' id='slide-5'>
+  <h3>Future work</h3>
+  <p>Add the possibility to open and fit custom data set
+<br><br>
+<br><br>
+<br><br></p>
+
+<h3>Acknowledgments</h3>
+
+<p>This <a href="http://zevross.com/blog/2014/11/19/creating-elegant-html-presentations-that-feature-r-code/">webpage</a> helped me get the two columns to work</p>
+
+</section>
+    </div>
+  </div>
+</body>
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/lib/js/head.min.js"></script>
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/js/reveal.min.js"></script>
+  <script>
+  // Full list of configuration options available here:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    theme: Reveal.getQueryHash().theme || 'beige', 
+    transition: Reveal.getQueryHash().transition || 'default', 
+    dependencies: [
+    // Cross-browser shim that fully implements classList -
+    // https://github.com/eligrey/classList.js/
+      { src: 'http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList;}},
+      // Zoom in and out with Alt+click
+      { src: 'http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      // Speaker notes
+      { src: 'http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+      // Remote control your reveal.js presentation using a touch device
+      //{ src: 'http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/revealjs/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+      ]
+  });
+  </script>  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+ 
+
+</html>
